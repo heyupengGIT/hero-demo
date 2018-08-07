@@ -22,6 +22,7 @@
 <script>
 // 导入APPHeader.vue
 import AppHeader from './components/AppHeader.vue';
+// 导入AppSidebar.vue
 import AppSidebar from './components/AppSidebar.vue';
 
 

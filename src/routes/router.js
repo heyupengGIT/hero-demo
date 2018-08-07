@@ -6,6 +6,9 @@ import HeroesList from '../views/heroes/List.vue';
 import EquipsList from '../views/equips/List.vue';
 import WeaponsList from '../views/weapons/List.vue';
 
+// 引入英雄添加模块儿
+import HeroesAdd from '../views/heroes/Add.vue';
+ 
 // 注册VueRouter  this.$router  this.$route
 Vue.use(VueRouter);
 
@@ -19,6 +22,8 @@ var router = new VueRouter({
     routes: [
         { path: '/', redirect: '/heroes' },
         { name: 'heroes', path:'/heroes', component: HeroesList },
+        { name: 'heroesadd', path:'/heroes/add', component: HeroesAdd },
+
         { name: 'equips', path:'/equips', component: EquipsList },
         { name: 'weapons', path:'/weapons', component: WeaponsList }
     ]
