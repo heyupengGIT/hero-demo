@@ -2,7 +2,7 @@
     <div>
         <h2 class="sub-header">英雄管理</h2>
         <!-- <a class="btn btn-success" href="add.html">添加</a> -->
-        <router-link class="btn btn-success" to="/heroes/add" >添加</router-link>
+        <router-link class="btn btn-success" to="/heroes/add">添加</router-link>
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -19,9 +19,9 @@
                         <td> {{ item.name }} </td>
                         <td> {{ item.gender }} </td>
                         <td>
-                            <a href="edit.html">编辑</a>
+                            <router-link :to="'/heroes/' + item.id">编辑</router-link>
                             &nbsp;&nbsp;
-                            <a href="javascript:window.confirm('Are you sure?')">删除</a>
+                            <a  @click.prevent="handleDel(item.id)" href="javascript:void(0)">删除</a>
                         </td>
                     </tr>
 
@@ -44,14 +44,43 @@ export default {
     };
   },
   created() {
-    axios
-      .get("http://localhost:3000/heroes")
-      .then((response) => {
-        if (response.status == 200) {
-          this.list = response.data;
+    this.loadData()
+  },
+  methods: {
+    loadData() {
+      // 发送异步请求，获取数据
+      axios
+        .get("http://127.0.0.1:3000/heroes")
+        .then((response) => {
+          // console.log(response);
+          if (response.status === 200) {
+            this.list = response.data;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    handleDel(id) {
+        if (!confirm('是否要删除该数据')) {
+            return;
         }
-      })
-      .catch(err => {});
+        
+        axios.delete(`http://127.0.0.1:3000/heroes/${id}`)
+        .then((response) => {
+            if (response.status === 200) {
+                this.loadData();
+            }else{
+                alert('删除失败')
+            }
+        })
+        .catch((err) => {
+            console.log('err');
+            
+        })
+    }
+
   }
 };
 </script>
